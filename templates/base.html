@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}Material Accounting{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Головна</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('all_users') }}">Дашборд</a></li>
+                <li><a href="{{ url_for('material_accounting') }}">Матеріальний облік</a></li>
+                <li><a href="{{ url_for('export_data') }}">Вивантажити дані</a></li>
+                <li><a href="{{ url_for('logout') }}">Вийти з акаунту</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Авторизуватись</a></li>
+                <li><a href="{{ url_for('register') }}">Реєстрація</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script>
+    // Виводимо popup повідомлення на основі отриманого статусу та повідомлення
+    function showAlert(status, message) {
+        if (status === 'success') {
+        toastr.success(message);
+        } else {
+        toastr.error(message);
+        }
+    }
+    </script>
+</body>
+</html>

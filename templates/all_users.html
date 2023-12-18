@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Список користувачів</title>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Головна</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('profile') }}">Профіль</a></li>
+                <li><a href="{{ url_for('all_users') }}">Список користувачів</a></li>
+                <li><a href="{{ url_for('material_accounting') }}">Матеріальний облік</a></li>
+                <li><a href="{{ url_for('logout') }}">Вийти з акаунту</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Авторизуватись</a></li>
+                <li><a href="{{ url_for('register') }}">Реєстрація</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class = "content">
+        <h1>Зареєстровані користувачі</h1>
+        <table>
+            <tr>
+                <th>Ім'я</th>
+                <th>Прізвище</th>
+                <th>Посада</th>
+                <th>Логін</th>
+            </tr>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.surname }}</td>
+                    <td>{{ user.position }}</td>
+                    <td>{{ user.username }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>

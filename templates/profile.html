@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Матераільний облік</title>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Головна</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('profile') }}">Профіль</a></li>
+                <li><a href="{{ url_for('all_users') }}">Список користувачів</a></li>
+                <li><a href="{{ url_for('material_accounting') }}">Матеріальний облік</a></li>
+                <li><a href="{{ url_for('logout') }}">Вийти з акаунту</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Авторизуватись</a></li>
+                <li><a href="{{ url_for('register') }}">Реєстрація</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+
+    {% block content %}{% endblock %}
+
+    <div class="content">
+    <h1>Профіль</h1>
+        <form method="POST" action="{{ url_for('update_profile') }}">
+        <table>
+        <tr>
+            <th>Посада</th>
+            <td>{{ user.position }}</td>
+        </tr>
+        <tr>
+            <th>Ім'я</th>
+            <td><input type="text" name="name" value="{{ user.name }}"></td>
+        </tr>
+        <tr>
+            <th>Прізвище</th>
+            <td><input type="text" name="surname" value="{{ user.surname }}"></td>
+        </tr>
+        <tr>
+            <th>Логін</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        </table>
+        <button type="submit">Оновити профіль</button>
+        </form>
+    </div>
+
+</body>
+</html>

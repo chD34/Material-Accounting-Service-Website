@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Реєстрація</title>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Головна</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('profile') }}">Профіль</a></li>
+                <li><a href="{{ url_for('all_users') }}">Список користувачів</a></li>
+                <li><a href="{{ url_for('material_accounting') }}">Матеріальний облік</a></li>
+                <li><a href="{{ url_for('logout') }}">Вийти з акаунту</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Авторизуватись</a></li>
+                <li><a href="{{ url_for('register') }}">Реєстрація</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="content">
+    <h1>Реєстрація</h1>
+    <form method="post" action="">
+        <label for="username">Логін:</label>
+        <input type="text" name="username" required>
+        <br>
+        <label for="name">Ім'я:</label>
+        <input type="text" name="name" required>
+        <br>
+        <label for="surname">Прізвище:</label>
+        <input type="text" name="surname" required>
+        <br>
+        <label for="password">Пароль:</label>
+        <input type="password" name="password" required>
+        <br>
+        <label for="position">Посада:</label>
+        <select name="position" required>
+            {% for position in positions %}
+                <option value="{{ position }}">{{ position }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Зареєструватись</button>
+    </form>
+    </div>
+
+</body>
+</html>

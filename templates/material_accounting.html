@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Матераільний облік</title>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Головна</a></li>
+            {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('profile') }}">Профіль</a></li>
+                <li><a href="{{ url_for('all_users') }}">Список користувачів</a></li>
+                <li><a href="{{ url_for('material_accounting') }}">Матеріальний облік</a></li>
+                <li><a href="{{ url_for('logout') }}">Вийти з акаунту</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Авторизуватись</a></li>
+                <li><a href="{{ url_for('register') }}">Реєстрація</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+
+    {% block content %}{% endblock %}
+
+    <div class="content">
+    <h1>Матеріальний облік</h1>
+    <form method="post" action="">
+    <table>
+        <tr>
+            <th>Предмет</th>
+            <th>Кількість</th>
+            <th>Поcтачальник</th>
+            <th>Отримувач</th>
+            <th>Дія</th>
+
+        </tr>
+        <tr>
+            <td><input type="text" name="subject" required></td>
+            <td><input type="number" name="quantity" required></td>
+            <td><input type="text" name="sender" required></td>
+            <td><input type="text" name="receiver" required></td>
+            <td>
+                <select name="action" required>
+                    <option value="Отримано">Отримано</option>
+                    <option value="Відправлено">Відправлено</option>
+                    <!-- Додайте інші дії за необхідності -->
+                </select>
+            </td>
+
+        </tr>
+    </table>
+    <button type="submit">Провести операцію</button>
+    </form>
+
+    <br>
+    <h2>Проведені операції</h2>
+    <table>
+        <tr>
+            <th>Користувач</th>
+            <th>Посада</th>
+            <th>Предмет</th>
+            <th>Кількість</th>
+            <th>Відправник</th>
+            <th>Отримувач</th>
+            <th>Дія</th>
+            <th>Дата операції</th>
+        </tr>
+        {% for operation in operations %}
+            <tr>
+                <!--{% set user = operation.user_id %} -->
+                <td>{{ operation.username }}</td>
+                <td>{{ operation.position }}</td>
+                <td>{{ operation.subject }}</td>
+                <td>{{ operation.quantity }}</td>
+                <td>{{ operation.sender }}</td>
+                <td>{{ operation.receiver }}</td>
+                <td>{{ operation.action }}</td>
+                <td>{{ operation.timestamp }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <p><a href="{{ url_for('export_data') }}">Вивантажити дані</a></p>
+
+    </div>
+
+</body>
+</html>
