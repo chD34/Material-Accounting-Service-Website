@@ -2,3 +2,5 @@
 
 Frontend project realized by using Python Flask Framework - webapplication for 
 the material accounting service in the military sphere.
+
+File to run: app.py
