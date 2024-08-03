@@ -1,2 +1,4 @@
-Фронтенд проект з використанням Python Flask - сайт для реалізації служби 
-матеріального обліку для військової сфери
+# Material Accounting Service Website
+
+Frontend project realized using Python Flask Framework - webapplication for 
+the material accounting service in the military sphere.
